@@ -8,7 +8,8 @@ module GTD
     end
 
     def render
-      "Left: #{(total - worked) / 60}    Period: #{total / 60}\n\n#{bar}\n\n"
+      system("clear")
+      puts "Left: #{(total - worked) / 60}    Period: #{total / 60}\n\n#{bar}\n\n"
     end
 
     private
