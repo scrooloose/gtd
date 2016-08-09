@@ -10,6 +10,12 @@ GTD::Timer.new(
     GTD::BreakActions::BansheePause.new,
     GTD::BreakActions::TmuxNotify.new,
     GTD::BreakActions::Ding.new
+  ],
+
+  renderers: [
+    GTD::Renderers::ProgressRenderer.new,
+    GTD::Renderers::TmuxRenderer.new
   ]
+
 ).start
 

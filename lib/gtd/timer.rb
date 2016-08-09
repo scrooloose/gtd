@@ -2,13 +2,13 @@ require 'io/console'
 
 module GTD
   class Timer
-    attr_reader :work_period, :sleep_period, :break_actions, :progress_renderer
+    attr_reader :work_period, :sleep_period, :break_actions, :renderers
 
-    def initialize(work_period: 1500, sleep_period: 60, break_actions: [], progress_renderer: ProgressRenderer)
+    def initialize(work_period: 1500, sleep_period: 60, break_actions: [], renderers: [])
       @work_period = work_period
       @sleep_period = sleep_period
       @break_actions = break_actions
-      @progress_renderer = progress_renderer
+      @renderers = renderers
     end
 
     def start
@@ -21,16 +21,23 @@ module GTD
 
       rescue Interrupt
         break_actions.each(&:quitting)
+        renderers.each(&:cleanup)
     end
 
     private
       def do_work_period
         worked_for = 0
         while worked_for <= work_period
-          progress_renderer.new(worked: worked_for, total: work_period).render
+          render(worked_for)
 
           sleep sleep_period
           worked_for += sleep_period
+        end
+      end
+
+      def render(worked_for)
+        renderers.each do |renderer|
+          renderer.render(worked: worked_for, total: work_period)
         end
       end
 

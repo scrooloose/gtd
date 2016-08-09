@@ -1,20 +1,14 @@
-module GTD
-  class ProgressRenderer
-    attr_reader :worked, :total
-
-    def initialize(worked: nil, total: nil)
-      @worked = worked
-      @total = total
-    end
-
-    def render
+module GTD::Renderers
+  class ProgressRenderer < Base
+    def render(worked: nil, total: nil)
       system("clear")
-      puts "Left: #{(total - worked) / 60}    Period: #{total / 60}\n\n#{bar}\n\n"
+      b = bar(worked: worked, total: total)
+      puts "Left: #{(total - worked) / 60}    Period: #{total / 60}\n\n#{b}\n\n"
     end
 
     private
 
-      def bar
+      def bar(worked: nil, total: nil)
         width = [`tput cols`.to_i - 2, 40].min
         worked_len = ((worked / total.to_f) * width).floor
 
