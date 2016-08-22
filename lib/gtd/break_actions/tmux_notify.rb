@@ -3,7 +3,7 @@ module GTD::BreakActions
     attr_reader :original_bg
 
     def initialize()
-      @original_bg = `tmux show-options -g | grep status-bg | awk '{ print $2 }'`
+      @original_bg = `tmux show-options -g | grep status-style | sed 's/.*bg=\\(.*\\)$/\\1/' | tr -d '\\n'`
     end
 
     def reset
