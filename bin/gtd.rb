@@ -7,9 +7,10 @@ GTD::Timer.new(
 
   break_actions: [
     GTD::BreakActions::NotifySend.new,
-    GTD::BreakActions::BansheePause.new,
+    #GTD::BreakActions::BansheePause.new,
     GTD::BreakActions::TmuxNotify.new,
-    GTD::BreakActions::Ding.new
+    GTD::BreakActions::Ding.new,
+    GTD::BreakActions::SlackStatus.new
   ],
 
   renderers: [
