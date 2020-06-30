@@ -19,9 +19,9 @@ module GTD
         block_till_next_work_period_started
       end
 
-      rescue Interrupt
-        break_actions.each(&:quitting)
-        renderers.each(&:cleanup)
+    rescue Interrupt
+      break_actions.each(&:quitting)
+      renderers.each(&:cleanup)
     end
 
     private

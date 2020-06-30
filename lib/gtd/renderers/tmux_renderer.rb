@@ -18,7 +18,7 @@ module GTD::Renderers
 
     private
 
-      def bar(worked: worked, total: total)
+      def bar(worked:, total:)
         width = 10
         worked_len = ((worked / total.to_f) * width).floor
 
