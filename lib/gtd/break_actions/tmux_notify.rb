@@ -2,8 +2,8 @@ module GTD::BreakActions
   class TmuxNotify < Base
     attr_reader :original_bg
 
-    def initialize()
-      @original_bg = `tmux show-options -g | grep status-style | sed 's/.*bg=\\(.*\\)$/\\1/' | tr -d '\\n'`
+    def initialize
+      @original_bg = `tmux show-options -g | grep status-bg | awk '{print $2}'`.strip
     end
 
     def reset
