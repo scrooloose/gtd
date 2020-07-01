@@ -23,29 +23,43 @@ module GTD::BreakActions
 
       def set_busy
         set_status(text: "Concentrating", emoji: ":thinking_face:")
+        set_dnd
       end
 
       def set_available
         set_status(text: "", emoji: "")
+        end_dnd
       end
 
       def set_status(text:, emoji:)
-        payload = {
-          "profile": {
-            "status_text": text,
-            "status_emoji": emoji
+        post(
+          url: status_url,
+          body: {
+            "profile": {
+              "status_text": text,
+              "status_emoji": emoji
+            }
           }
-        }
+        )
+      end
 
+      def set_dnd
+        post(url: 'https://slack.com/api/dnd.setSnooze?num_minutes=1000')
+      end
+
+      def end_dnd
+        post(url: 'https://slack.com/api/dnd.endDnd')
+      end
+
+      def post(url:, body: '')
         HTTParty.post(
-          status_url,
-          body: payload.to_json,
+          url,
+          body: body.to_json,
           headers: {
             'content-type' => 'application/json',
             'authorization' => "Bearer #{slack_token}"
           }
         )
-
       end
   end
 end
